@@ -1,0 +1,9 @@
+= semantic_form_for([@parent, @account].compact) do |f|
+  = f.semantic_errors
+
+  = f.inputs do
+    = f.input :name
+    = f.input :code
+
+  = render('shared/common_form_buttons')
+

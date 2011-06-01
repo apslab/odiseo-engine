@@ -1,0 +1,37 @@
+- content_for(:title) do
+  = Exercise.model_name.human.pluralize.titlecase
+
+- content_for(:breadcrumbs) do
+  = breadcrumbs do |breadcrumb|
+    - breadcrumb.item current_company.name.titlecase, company_path(current_company)
+    - breadcrumb.item "Ejercicios", exercises_path
+    - breadcrumb.item 'Listado', exercises_path, :active => true
+
+- if can?(:create, Exercise)
+  - content_for(:controls) do
+    = controls do |control|
+      - control.item t('scaffold.actions.new', :item => Exercise.model_name.human).titlecase, new_exercise_path, :icon => 'add'
+
+- if @exercises.any?
+  %table
+    %tr
+      %th= Exercise.human_attribute_name('started_on')
+      %th= Exercise.human_attribute_name('finished_on')
+      %th= Exercise.human_attribute_name('description')
+      %th= Exercise.human_attribute_name('uneven')
+      %th= Exercise.human_attribute_name('close')
+      %th
+      %th
+      %th
+
+    - @exercises.each do |exercise|
+      %tr
+        %td= exercise.started_on
+        %td= exercise.finished_on
+        %td= exercise.description
+        %td= exercise.uneven? ? icon('tick') : icon('cross')
+        %td= exercise.close? ? icon('tick') : icon('cross')
+        %td= link_to icon('application_get', :small, :title => t('scaffold.actions.show').titlecase), exercise
+        %td= link_to icon('application_edit', :small, :title => t('scaffold.actions.edit').titlecase), edit_exercise_path(exercise)
+        %td= link_to icon('application_delete', :small, :title => t('scaffold.actions.destroy').titlecase), exercise, :confirm => t('scaffold.actions.destroy_confirm'), :method => :delete
+

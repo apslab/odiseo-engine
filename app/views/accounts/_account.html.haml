@@ -1,0 +1,6 @@
+= div_for(account) do
+  = account.name
+  = link_to_function(icon('edit'), "edit_account('#{edit_account(account)}')")
+  = link_to(icon('delete'), account, :confirm => t('scaffold.actions.destroy_confirm'), :method => :delete, :remote => true)
+  = link_to_function(icon('add'), "add_account(#{account.id})")
+

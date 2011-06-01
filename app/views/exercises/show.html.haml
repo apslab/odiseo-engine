@@ -1,0 +1,25 @@
+- content_for(:title) do
+  = "Ejercicio #{@exercise.label}"
+
+- content_for(:breadcrumbs) do
+  = breadcrumbs do |breadcrumb|
+    - breadcrumb.item current_company.name.titlecase, company_path(current_company)
+    - breadcrumb.item "Ejercicios", exercises_path
+    - breadcrumb.item @exercise.label.html_safe, exercise_path(@exercise)
+    - breadcrumb.item 'Ver', exercise_path(@exercise), :active => true
+
+- content_for(:controls) do
+  = controls do |control|
+    - control.item t('scaffold.actions.edit').titlecase, edit_exercise_path(@exercise), :icon => 'application_edit'
+    - control.item t('scaffold.actions.back').titlecase, exercises_path, :icon => 'application_view_list'
+
+= semantic_attributes_for(@exercise) do |s|
+  = s.attributes do
+    = s.attribute :started_on
+    = s.attribute :finished_on
+    = s.attribute :description
+    = s.attribute :uneven, :value => (@exercise.uneven?) ? icon('tick') : icon('cross')
+    = s.attribute :close, :value => (@exercise.close?) ? icon('tick') : icon('cross')
+
+.clear
+

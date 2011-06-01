@@ -1,0 +1,23 @@
+- content_for(:title) do
+  = @account.name.titlecase
+
+- content_for(:breadcrumbs) do
+  = breadcrumbs do |breadcrumb|
+    - breadcrumb.item current_company.name.titlecase, company_path(current_company)
+    - breadcrumb.item 'Cuentas', accounts_path
+    - breadcrumb.item @account.name.titlecase, account_path(@account)
+    - breadcrumb.item 'Ver', account_path(@account), :active => true
+
+- content_for(:controls) do
+  = controls do |control|
+    - control.item t('scaffold.actions.edit').titlecase, edit_account_path(@account), :icon => 'application_edit'
+    - control.item t('scaffold.actions.back').titlecase, accounts_path, :icon => 'application_view_list'
+    - control.item t('scaffold.actions.back').titlecase, accounts_path, :icon => 'application_view_list'
+
+= semantic_attributes_for(@account) do |s|
+  = s.attributes(Account.human_name + ' Info') do
+    = s.attribute :name
+    = s.attribute :code
+
+.clear
+

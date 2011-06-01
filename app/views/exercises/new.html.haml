@@ -1,0 +1,15 @@
+- content_for(:title) do
+  = t('scaffold.actions.new', :item => Exercise.model_name.human).titlecase
+
+- content_for(:breadcrumbs) do
+  = breadcrumbs do |breadcrumb|
+    - breadcrumb.item current_company.name.titlecase, company_path(current_company)
+    - breadcrumb.item "Ejercicios", exercises_path
+    - breadcrumb.item 'Nuevo', new_exercise_path, :active => true
+
+- content_for(:controls) do
+  = controls do |control|
+    - control.item t('scaffold.actions.back').titlecase, exercises_path, :icon => 'application_view_list'
+
+= render 'form'
+

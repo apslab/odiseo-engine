@@ -1,0 +1,17 @@
+- content_for(:title) do
+  = t('scaffold.actions.edit', :item => Exercise.model_name.human).titlecase
+
+- content_for(:breadcrumbs) do
+  = breadcrumbs do |breadcrumb|
+    - breadcrumb.item current_company.name.titlecase, company_path(current_company)
+    - breadcrumb.item "Ejercicios", exercises_path
+    - breadcrumb.item @exercise.label.html_safe, exercise_path(@exercise)
+    - breadcrumb.item 'Editar', edit_exercise_path(@exercise), :active => true
+
+- content_for(:controls) do
+  = controls do |control|
+    - control.item t('scaffold.actions.show').titlecase, @exercise, :icon => 'application_get'
+    - control.item t('scaffold.actions.back').titlecase, exercises_path, :icon => 'application_view_list'
+
+= render 'form'
+

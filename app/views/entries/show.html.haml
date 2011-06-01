@@ -1,0 +1,46 @@
+- content_for(:title) do
+  = "Asiento #{@entry.description}"
+
+- content_for(:breadcrumbs) do
+  = breadcrumbs do |breadcrumb|
+    - breadcrumb.item current_company.name.titlecase, root_path
+    - breadcrumb.item 'Asientos', entries_path
+    - breadcrumb.item @entry.description, entry_path(@entry)
+    - breadcrumb.item 'Ver', entry_path(@entry), :active => true
+
+- content_for(:controls) do
+  = controls do |control|
+    - control.item t('scaffold.actions.edit').titlecase, edit_entry_path(@entry), :icon => 'application_edit'
+    - control.item t('scaffold.actions.back').titlecase, entries_path, :icon => 'application_view_list'
+
+= semantic_attributes_for(@entry) do |s|
+  = s.attributes do
+    = s.attribute :exercise, :value => @entry.exercise.label
+    = s.attribute :date_on
+    = s.attribute :description
+
+    .block
+      %h2 Detalles
+      %table.table{:style=>'margin:10px;width:98%'}
+        %tr
+          %th descripcion
+          %th cuenta
+          %th.last debe
+          %th.last haber
+          %th.last saldo
+        - @entry.details.each do |detail|
+          %tr{:class => "#{cycle('odd','even')}"}
+            %td= detail.description
+            %td= raw detail.account.self_and_ancestors.map(&:name).join(' &raquo; ')
+            %td.last{:style => 'text-align:right;'}= number_to_currency(detail.debit)
+            %td.last{:style => 'text-align:right;'}= number_to_currency(detail.credit)
+            %td.last{:style => 'text-align:right;'}= number_to_currency(detail.balance)
+        %tr
+          %th{:colspan => 2, :style => 'text-align:left;'} totales
+          %th.last{:style => 'text-align:right;'}=number_to_currency(@entry.details.debit)
+          %th.last{:style => 'text-align:right;'}=number_to_currency(@entry.details.credit)
+          %th.last{:style => 'text-align:right;'}=number_to_currency(@entry.details.balance)
+
+
+.clear
+

@@ -1,0 +1,87 @@
+- content_for(:title, "Cuentas")
+
+- content_for(:breadcrumbs) do
+  = breadcrumbs do |breadcrumb|
+    - breadcrumb.item current_company.name.titlecase, accounts_path
+    - breadcrumb.item "Cuentas", accounts_path
+
+- if can?(:create, Account)
+  - content_for(:controls) do
+    = controls do |control|
+      - control.item 'Nueva Cuenta', new_account_url, :icon => 'add', :link_options => {:rel => '#overlay', :class => 'overlay-handler', :style => 'text-decoration:none'}
+
+- content_for(:head) do
+  = javascript_include_tag('jquery.cookie', 'jquery.treeview', 'jquery.treeview.edit', 'jquery.treeview.async')
+  = stylesheet_link_tag('jquery.treeview', :media => 'screen, projection')
+  = javascript_include_tag('jquery.tools.min.js')
+  :javascript
+    var makeOverloads = function(){
+      $("a.overlay-handler, a[rel='#overlay']").overlay({
+        mask: 'darkred',
+        effect: 'apple',
+        mask: {
+          color: '#ebecff',
+          loadSpeed: 200,
+          opacity: 0.55
+        },
+        closeOnClick: false,
+        onBeforeLoad: function() {
+          // grab wrapper element inside content
+          var wrap = this.getOverlay().find(".contentWrap");
+          // load the page specified in the trigger
+          wrap.load(this.getTrigger().attr("href"));
+        }
+      });
+    };
+    $(document).ready(function(){
+      $('#account-list').treeview({url: location.href, collapsed: false, onLoad: makeOverloads});
+    });
+  :css
+    #overlay {
+      background-image:url(http://static.flowplayer.org/img/overlay/transparent.png);
+      color:#efefef;
+      height:450px;
+    }
+
+    /* container for external content. uses vertical scrollbar, if needed */
+    div.contentWrap {
+      height:441px;
+      overflow-y:auto;
+    }
+
+    /* the overlayed element */
+    .apple_overlay {
+
+      /* initially overlay is hidden */
+      display:none;
+
+      /* growing background image */
+      background-image:url(/images/overlay/white.png);
+
+      /*
+        width after the growing animation finishes
+        height is automatically calculated
+      */
+      width:640px;
+
+      /* some padding to layout nested elements nicely  */
+      padding:35px;
+
+      /* a little styling */
+      font-size:11px;
+    }
+
+    /* default close button positioned on upper right corner */
+    .apple_overlay .close {
+      background-image:url(/images/overlay/close.png);
+      position:absolute; right:5px; top:5px;
+      cursor:pointer;
+      height:35px;
+      width:35px;
+    }
+
+%ul#account-list
+
+#overlay.apple_overlay.overlay-handler
+  .contentWrap
+

@@ -1,0 +1,106 @@
+- content_for(:head) do
+  :javascript
+    $(document).ready(function(){
+      $('input.credit, input.debit').live('change', test_exclusive_value);
+      $('input.credit, input.debit').live('change', calculate_totals);
+    });
+
+    var calculate_totals = function(event, eventData){
+      if (!event.isPropagationStopped()){
+        var credit = debit = balance = 0.0;
+
+        $("input.credit").each(function(index, element){
+          credit += parseFloat($(element).val() || 0);
+        });
+        $("input.debit").each(function(index, element){
+          debit += parseFloat($(element).val() || 0);
+        });
+
+        balance = credit - debit;
+
+        $('#credit').html(formatNumber(credit,2,',','.','$ ','','-'));
+        $('#debit').html(formatNumber(debit,2,',','.','$ ','','-'));
+        $('#balance').html(formatNumber(balance,2,',','.','$ ','','-'));
+      }
+    };
+
+    var test_exclusive_value = function(event, eventData){
+      target_class = ($(this).hasClass('debit')) ? 'input.credit' : 'input.debit'
+
+      var origin = parseFloat($(this).val() || 0);
+      var silbing = parseFloat($(this).closest('ol').find(target_class).val() || 0);
+      if (origin > 0 && silbing > 0) {
+        event.stopPropagation();
+        alert('No puede haber carga al debe y al haber simultaneamente!');
+      }
+      if (origin == 0 && silbing == 0) {
+        event.stopPropagation();
+        alert('El debe o el haber debe tener algun importe cargado!');
+      }
+    }
+
+    var formatNumber = function(num,dec,thou,pnt,curr1,curr2,n1,n2){
+      var x = Math.round(num * Math.pow(10,dec));
+
+      if (x >= 0) n1=n2='';
+
+      var y = (''+Math.abs(x)).split('');
+      var z = y.length - dec;
+
+      if (z<0) z--;
+
+      for(var i = z; i < 0; i++)
+        y.unshift('0');
+
+      if (z<0) z = 1;
+
+      y.splice(z, 0, pnt);
+
+      if(y[0] == pnt) y.unshift('0');
+
+      while (z > 3){
+        z-=3;
+        y.splice(z,0,thou);
+      }
+
+      var r = curr1+n1+y.join('')+curr2;
+
+      return(r);
+    };
+
+= semantic_form_for @entry do |form|
+  = form.semantic_errors
+
+  = form.inputs(:class => :column_left) do
+    = form.input :exercise, :collection => current_company.exercises.map{|e|[e.label, e.id]}, :prompt => false
+  = form.inputs(:class => :column_right) do
+    = form.input :date_on, :as => :datepicker
+  .clear
+  = form.inputs do
+    = form.input :description
+
+  = form.inputs do
+    = link_to_add_association icon('add', :small, :style => 'vertical-align:middle;')+' Agregar Detalle', form, :details, 'data-association-insertion-position' => :after, 'data-association-insertion-node' => 'h2.details_title', :class => 'global_button button'
+
+    %h2.details_title Detalles
+
+    = form.semantic_fields_for :details do |detail|
+      = render 'detail_fields', :f => detail
+
+    .totals
+      %span.balance{:style => 'float:right;margin-right: 10px'}
+        %b Saldo
+        %br
+        %span#balance= number_to_currency(@entry.details.balance)
+      %span.credit{:style => 'float:right;margin-right: 10px'}
+        %b Haber
+        %br
+        %span#credit= number_to_currency(@entry.details.credit)
+      %span.debit{:style => 'float:right;margin-right: 10px'}
+        %b Debe
+        %br
+        %span#debit= number_to_currency(@entry.details.debit)
+
+
+  = render('shared/common_form_buttons')
+
