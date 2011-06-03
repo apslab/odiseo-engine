@@ -3,7 +3,7 @@
 
 - content_for(:breadcrumbs) do
   = breadcrumbs do |breadcrumb|
-    - breadcrumb.item current_company.name.titlecase, company_path(current_company)
+    - breadcrumb.item current_company.name.titlecase, root_path
     - breadcrumb.item "Ejercicios", exercises_path
     - breadcrumb.item @exercise.label.html_safe, exercise_path(@exercise)
     - breadcrumb.item 'Editar', edit_exercise_path(@exercise), :active => true

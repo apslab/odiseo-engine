@@ -2,7 +2,7 @@
 
 - content_for(:breadcrumbs) do
   = breadcrumbs do |breadcrumb|
-    - breadcrumb.item current_company.name.titlecase, accounts_path
+    - breadcrumb.item current_company.name.titlecase, root_path
     - breadcrumb.item "Cuentas", accounts_path
 
 - if can?(:create, Account)
