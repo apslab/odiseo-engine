@@ -3,7 +3,7 @@
 
 - content_for(:breadcrumbs) do
   = breadcrumbs do |breadcrumb|
-    - breadcrumb.item current_company.name.titlecase, company_path(current_company)
+    - breadcrumb.item current_company.name.titlecase, root_path
     - breadcrumb.item 'Cuentas', accounts_path
     - breadcrumb.item @account.name.titlecase, account_path(@account)
     - breadcrumb.item 'Ver', account_path(@account), :active => true

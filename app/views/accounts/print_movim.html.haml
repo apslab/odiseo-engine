@@ -1,0 +1,14 @@
+- if @account_movim_list.any?
+  %table
+    %tr
+      %th= 'detalle' 
+      %th= 'cuenta'
+      %th= 'debito'
+      %th= 'credito'
+
+    - @account_movim_list.each do |item|
+      %tr
+        %td= item.description
+        %td= item.account.name
+        %td= item.debit
+        %td= item.credit

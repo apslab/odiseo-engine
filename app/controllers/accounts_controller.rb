@@ -1,6 +1,5 @@
 class AccountsController < AuthorizedController
 
-
   before_filter :find_parent
   before_filter :find_account, :except => [:index, :new, :create]
 
@@ -105,6 +104,9 @@ class AccountsController < AuthorizedController
     end
   end
 
+  def list_account
+    respond_with(@account)
+  end
 
   protected
 

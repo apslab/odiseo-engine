@@ -17,6 +17,7 @@ Rails.application.routes.draw do
 
     member do
       get 'print_movim', :action => :print_movim
+      get 'list_account', :action => :list_account
     end
   end
 

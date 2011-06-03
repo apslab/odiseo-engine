@@ -4,7 +4,8 @@ module AccountsHelper
       [account.label_html,
         link_to(icon('add'), new_account_account_url(account), :rel => '#overlay', :class => 'overlay-handler', :style => 'text-decoration:none'),
         link_to(icon('application_delete'), account, :confirm => 'borrar', :method => :delete),
-        link_to(icon('application_edit'), edit_account_url(account), :rel => '#overlay', :class => 'overlay-handler', :style => 'text-decoration:none')
+        link_to(icon('application_edit'), edit_account_url(account), :rel => '#overlay', :class => 'overlay-handler', :style => 'text-decoration:none'),
+        link_to(icon('printer'), print_movim_account_url(account), :rel => '#overlay', :class => 'overlay-handler', :style => 'text-decoration:none')
       ].join(' ').html_safe
     end
   end
