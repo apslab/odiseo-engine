@@ -1,4 +1,4 @@
-class AccountsController < ApplicationController
+class AccountsController < AuthorizedController
 
 
   before_filter :find_parent

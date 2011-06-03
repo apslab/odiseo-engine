@@ -1,4 +1,4 @@
-class ExercisesController < ApplicationController
+class ExercisesController < AuthorizedController
 
   before_filter :find_exercise, :except => [:index, :opened, :closed, :new, :create]
 

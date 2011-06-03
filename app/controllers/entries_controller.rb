@@ -1,4 +1,4 @@
-class EntriesController < ApplicationController
+class EntriesController < AuthorizedController
 
   before_filter :find_entry, :except => [:index, :new, :create]
 
