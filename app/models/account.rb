@@ -24,6 +24,7 @@
 class Account < ActiveRecord::Base
   acts_as_nested_set
 
+  belongs_to :company
   has_many :exercises, :through => :company, :readonly => true
   has_many :details
 
