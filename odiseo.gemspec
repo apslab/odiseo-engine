@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{odiseo}
-  s.version = "0.0.0"
+  s.version = "0.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = [%q{AP System}]
-  s.date = %q{2011-06-01}
+  s.date = %q{2011-06-06}
   s.description = %q{Adminsitracion de contabilidad}
   s.email = %q{info@ap-sys.com.ar}
   s.extra_rdoc_files = [
@@ -20,18 +20,51 @@ Gem::Specification.new do |s|
     ".document",
     ".rspec",
     "Gemfile",
+    "Gemfile.lock",
     "LICENSE.txt",
     "README.rdoc",
     "Rakefile",
     "VERSION",
+    "app/controllers/accounts_controller.rb",
+    "app/controllers/entries_controller.rb",
+    "app/controllers/exercises_controller.rb",
+    "app/helpers/accounts_helper.rb",
+    "app/helpers/entries_helper.rb",
+    "app/helpers/exercises_helper.rb",
+    "app/models/account.rb",
+    "app/models/detail.rb",
+    "app/models/entry.rb",
+    "app/models/exercise.rb",
+    "app/views/accounts/_account.html.haml",
+    "app/views/accounts/_form.html.haml",
+    "app/views/accounts/edit.html.haml",
+    "app/views/accounts/index.html.haml",
+    "app/views/accounts/list_account.html.haml",
+    "app/views/accounts/new.html.haml",
+    "app/views/accounts/print_movim.html.haml",
+    "app/views/accounts/show.html.haml",
+    "app/views/entries/_detail_fields.html.haml",
+    "app/views/entries/_form.html.haml",
+    "app/views/entries/edit.html.haml",
+    "app/views/entries/index.html.haml",
+    "app/views/entries/new.html.haml",
+    "app/views/entries/show.html.haml",
+    "app/views/exercises/_form.html.haml",
+    "app/views/exercises/edit.html.haml",
+    "app/views/exercises/index.html.haml",
+    "app/views/exercises/new.html.haml",
+    "app/views/exercises/show.html.haml",
+    "config/routes.rb",
     "lib/odiseo.rb",
+    "lib/odiseo/engine.rb",
+    "odiseo.gemspec",
     "spec/odiseo_spec.rb",
     "spec/spec_helper.rb"
   ]
   s.homepage = %q{http://github.com/lguardiola/odiseo}
   s.licenses = [%q{MIT}]
   s.require_paths = [%q{lib}]
-  s.rubygems_version = %q{1.8.4}
+  s.rubygems_version = %q{1.8.5}
   s.summary = %q{Proyecto Contable}
 
   if s.respond_to? :specification_version then
