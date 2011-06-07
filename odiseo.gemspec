@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{odiseo}
-  s.version = "0.1.0"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = [%q{AP System}]
-  s.date = %q{2011-06-06}
+  s.date = %q{2011-06-07}
   s.description = %q{Adminsitracion de contabilidad}
   s.email = %q{info@ap-sys.com.ar}
   s.extra_rdoc_files = [
@@ -28,13 +28,16 @@ Gem::Specification.new do |s|
     "app/controllers/accounts_controller.rb",
     "app/controllers/entries_controller.rb",
     "app/controllers/exercises_controller.rb",
+    "app/controllers/odiseo/reports_controller.rb",
     "app/helpers/accounts_helper.rb",
     "app/helpers/entries_helper.rb",
     "app/helpers/exercises_helper.rb",
+    "app/helpers/odiseo/reports_helper.rb",
     "app/models/account.rb",
     "app/models/detail.rb",
     "app/models/entry.rb",
     "app/models/exercise.rb",
+    "app/models/odiseo/report.rb",
     "app/views/accounts/_account.html.haml",
     "app/views/accounts/_form.html.haml",
     "app/views/accounts/edit.html.haml",
@@ -54,12 +57,21 @@ Gem::Specification.new do |s|
     "app/views/exercises/index.html.haml",
     "app/views/exercises/new.html.haml",
     "app/views/exercises/show.html.haml",
+    "app/views/odiseo/reports/_form.html.haml",
+    "app/views/odiseo/reports/new.html.haml",
+    "app/views/odiseo/reports/show.html.haml",
     "config/routes.rb",
     "lib/odiseo.rb",
     "lib/odiseo/engine.rb",
     "odiseo.gemspec",
+    "spec/controllers/odiseo/reports_controller_spec.rb",
+    "spec/helpers/odiseo/reports_helper_spec.rb",
     "spec/odiseo_spec.rb",
-    "spec/spec_helper.rb"
+    "spec/requests/odiseo/odiseo_reports_spec.rb",
+    "spec/routing/odiseo/reports_routing_spec.rb",
+    "spec/spec_helper.rb",
+    "spec/views/odiseo/reports/new.html.haml_spec.rb",
+    "spec/views/odiseo/reports/show.html.haml_spec.rb"
   ]
   s.homepage = %q{http://github.com/lguardiola/odiseo}
   s.licenses = [%q{MIT}]
