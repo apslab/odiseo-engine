@@ -1,0 +1,24 @@
+- content_for(:title) do
+  Movimientos por Cuenta
+
+%h2= @account.self_and_ancestors.map(&:name).join(' &raquo; ').html_safe
+
+= render 'form'
+
+- if @details.present? && @details.any?
+  .block
+    %h2= "Resultados"
+    %table
+      %tr
+        %th Fecha
+        %th Descripcion
+        %th Debe
+        %th Haber
+      - @details.each do |detail|
+        %tr
+          %td= detail.entry.date_on.to_s(:default)
+          %td= detail.description
+          %td= number_to_currency(detail.debit || 0)
+          %td= number_to_currency(detail.credit || 0)
+
+.clear

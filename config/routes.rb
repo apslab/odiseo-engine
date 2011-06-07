@@ -15,10 +15,12 @@ Rails.application.routes.draw do
 
     resources :accounts
 
-    member do
-      get 'print_movim', :action => :print_movim
-      get 'list_account', :action => :list_account
-    end
+    #member do
+    #  get 'print_movim', :action => :print_movim
+    #  get 'list_account', :action => :list_account
+    #end
+    resource :report, :only => [:new, :create], :controller => 'odiseo/reports'
+
   end
 
   resources :entries

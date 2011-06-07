@@ -1,0 +1,2 @@
+module Odiseo::ReportsHelper
+end

@@ -88,13 +88,14 @@ class AccountsController < AuthorizedController
     respond_with(@account)
   end
 
+=begin
   def print_movim
       @account_movim_list = @account.details
 
       respond_to do |format|
         format.html # .html.erb
         format.xml  { render :xml => @account_movim_list }
-#        format.pdf { render :pdf => "cc_#{@cliente.id}",
+#       format.pdf { render :pdf => "cc_#{@cliente.id}",
 #                         :template => 'clientes/cuentacorriente.html.erb',
 #                         :show_as_html => params[:debug].present?,      # allow debuging based on url param
 #                         :layout => 'pdf.html.erb',
@@ -107,6 +108,7 @@ class AccountsController < AuthorizedController
   def list_account
     respond_with(@account)
   end
+=end
 
   protected
 
