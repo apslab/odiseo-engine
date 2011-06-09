@@ -24,7 +24,7 @@ class Detail < ActiveRecord::Base
   validate :debit_and_credit_non_zero, :debit_and_credit_exclusive_value
 
   def balance
-    credit.to_f - debit.to_f
+    credit - debit
   end
 
   private
