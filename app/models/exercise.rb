@@ -54,6 +54,10 @@ class Exercise < ActiveRecord::Base
     period.map{|e|e.to_s(:default)}.join('...') + ' ' + description.to_s
   end
 
+  def short_label
+    period.map(&:to_s).join('..')
+  end
+
   def open?
     !close?
   end

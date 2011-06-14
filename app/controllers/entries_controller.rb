@@ -8,10 +8,26 @@ class EntriesController < AuthorizedController
   # GET /entries.json
   # GET /entries.xml
   def index
-    #@entries = Entry.where({:exercise_id => current_company.exercise_ids}, :include => :exercise)
-    params[:type] ||= :opened
-    @exercises = current_company.exercises.send(params[:type])
-    flash[:notice] = t('flash.actions.index.notice') if current_company.exercises.empty?
+    unless params[:exercise_id].blank?
+      @exercise = current_company.exercises.find(params[:exercise_id])
+    else
+      @exercise = current_company.exercises.first
+    end
+    
+=begin
+    params[:search] ||= {}
+
+    @entries = @exercise.entries.scoped(:include => :details)
+
+    @entries.where(['entries.detail LIKE ?', params[:search][:detail]]) unless params[:search][:detail].blank?
+
+    @entries = @entries.page(params[:page])
+=end
+    
+    @entries = @exercise.entries.page(params[:page])
+
+    flash.now[:notice] = t('flash.actions.index.notice') if @entries.empty?
+
     respond_with(@entries)
   end
 

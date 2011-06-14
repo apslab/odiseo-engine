@@ -15,6 +15,9 @@
 #
 
 class Entry < ActiveRecord::Base
+  paginates_per 30
+  default_scope order('exercise_id DESC, date_on DESC')
+
   belongs_to :exercise, :counter_cache => true
 
   has_many :details do
@@ -41,8 +44,6 @@ class Entry < ActiveRecord::Base
   validate :check_balance, :check_many_entries, :date_between_exercise_date
 
   before_destroy :destroy_forbiden
-
-  default_scope order('exercise_id DESC, date_on DESC')
 
   def self.setup
     new do |entry|
