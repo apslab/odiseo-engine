@@ -1,0 +1,24 @@
+- content_for(:title) do
+  Balance de Sumas y Saldos
+
+= render 'form'
+
+- if @accounts.present? && @accounts.any?
+  .block
+    %h2= "Resultados"
+    %table
+      %tr
+        %th Cuenta
+        %th Debe
+        %th Haber
+        %th Saldo
+      - @accounts.each do |account|
+        %tr
+          %td= account.name
+          %td
+            = number_to_currency(account.debit) unless account.debit.zero?
+          %td
+            = number_to_currency(account.credit) unless account.credit.zero?
+          %td= number_to_currency(account.debit - account.credit || 0)
+
+.clear

@@ -8,6 +8,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resource :balance_report, :only => [:new, :create], :controller => 'odiseo/balance_reports'
+
   resources :accounts do
     collection do
       get 'archived'
