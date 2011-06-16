@@ -29,12 +29,14 @@ module Odiseo
     def accounts
       return [] unless valid?
 
-      Detail.select('distinct accounts.name as name, sum(details.credit) as credit, sum(details.debit) as debit')
+      leaves = exercise.company.accounts.leaves
+
+      Detail.select('account_id as name, sum(details.credit) as credit, sum(details.debit) as debit')
         .joins(:entry, :account)
         .where(:entries => {:exercise_id => exercise.id})
-        .where(:account_id => exercise.company.accounts.leaves.map(&:id))
+        .where(:account_id => leaves.map(&:id))
         .where(:entries => {:date_on => since_date..until_date})
-        .group(:account_id)
+        .group(:account_id).map{|account| account.name = leaves.detect{|leave| leave.id == account.name}.try(:name); account}
     end
 
     def to_key
