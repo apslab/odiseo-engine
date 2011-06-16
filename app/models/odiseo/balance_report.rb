@@ -28,8 +28,8 @@ module Odiseo
 
     def accounts
       return [] unless valid?
-      Detail.select('account_id as name, sum(details.credit) as credit, sum(details.debit) as debit')
-        .joins(:entry, :account)
+      Detail.select('distinct details.account_id as name, sum(details.credit) as credit, sum(details.debit) as debit')
+        .joins(:entry)
         .where(:entries => {:exercise_id => exercise.id})
         .where(:account_id => exercise.company.accounts.leaves.map(&:id))
         .where(:entries => {:date_on => since_date..until_date})
