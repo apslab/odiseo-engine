@@ -53,7 +53,7 @@ module Odiseo
     def data
       return [] unless valid?
 
-      @data ||= Detail.select('details.account_id as id, accounts.name as name, sum(details.credit) as credit, sum(details.debit) as debit')
+      @data ||= Detail.select('details.account_id as id, distinct(accounts.name) as name, sum(details.credit) as credit, sum(details.debit) as debit')
         .joins(:entry, :account)
         .where(:entries => {:exercise_id => exercise.id})
         .where(:account_id => exercise.company.accounts.leaves.map(&:id))
