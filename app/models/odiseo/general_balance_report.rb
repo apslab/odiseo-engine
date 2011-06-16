@@ -39,7 +39,7 @@ module Odiseo
 
       icons = %w(blue green orange pink red yellow purple)
       Account.map_with_level(company.accounts.roots.map(&:self_and_descendants).flatten) do |account, level|
-        name = ('&nbsp;' * level) + '<img src="/images/icons/16x16/tag_'+ icons.at(level.modulo(icons.size)) +'.png" width="16" height="16" />' + account.name 
+        name = ("&nbsp;\t&nbsp;" * level) + '<img src="/images/icons/16x16/tag_'+ icons.at(level.modulo(icons.size)) +'.png" width="16" height="16" />' + account.name 
         credit, debit = sumarize_credit_and_debit_for_this_ids(account.self_and_descendants.map(&:id))
         OpenStruct.new(:name => name, :credit => credit, :debit => debit)
       end
