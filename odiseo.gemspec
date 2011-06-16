@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{odiseo}
-  s.version = "0.3.0"
+  s.version = "0.4.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = [%q{AP System}]
-  s.date = %q{2011-06-14}
+  s.date = %q{2011-06-16}
   s.description = %q{Adminsitracion de contabilidad}
   s.email = %q{info@ap-sys.com.ar}
   s.extra_rdoc_files = [
@@ -28,15 +28,21 @@ Gem::Specification.new do |s|
     "app/controllers/accounts_controller.rb",
     "app/controllers/entries_controller.rb",
     "app/controllers/exercises_controller.rb",
+    "app/controllers/odiseo/balance_reports_controller.rb",
+    "app/controllers/odiseo/general_balance_reports_controller.rb",
     "app/controllers/odiseo/reports_controller.rb",
     "app/helpers/accounts_helper.rb",
     "app/helpers/entries_helper.rb",
     "app/helpers/exercises_helper.rb",
+    "app/helpers/odiseo/balance_reports_helper.rb",
+    "app/helpers/odiseo/general_balance_reports_helper.rb",
     "app/helpers/odiseo/reports_helper.rb",
     "app/models/account.rb",
     "app/models/detail.rb",
     "app/models/entry.rb",
     "app/models/exercise.rb",
+    "app/models/odiseo/balance_report.rb",
+    "app/models/odiseo/general_balance_report.rb",
     "app/models/odiseo/report.rb",
     "app/views/accounts/_account.html.haml",
     "app/views/accounts/_form.html.haml",
@@ -57,9 +63,12 @@ Gem::Specification.new do |s|
     "app/views/exercises/index.html.haml",
     "app/views/exercises/new.html.haml",
     "app/views/exercises/show.html.haml",
+    "app/views/odiseo/balance_reports/_form.html.haml",
+    "app/views/odiseo/balance_reports/new.html.haml",
+    "app/views/odiseo/general_balance_reports/_form.html.haml",
+    "app/views/odiseo/general_balance_reports/new.html.haml",
     "app/views/odiseo/reports/_form.html.haml",
     "app/views/odiseo/reports/new.html.haml",
-    "app/views/odiseo/reports/show.html.haml",
     "config/routes.rb",
     "lib/odiseo.rb",
     "lib/odiseo/engine.rb",
