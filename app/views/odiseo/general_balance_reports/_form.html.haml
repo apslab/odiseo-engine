@@ -1,0 +1,14 @@
+= semantic_form_for(@general_balance_report, :url => general_balance_report_path) do |f|
+  = f.semantic_errors
+
+  = f.inputs(:class => :column_left) do
+    = f.input :exercise_id, :as => :select, :collection => current_company.exercises.map{|e|[e.label, e.id]}    
+  = f.inputs(:class => :column_right) do
+    = f.input :until_date, :as => :datepicker
+  .clear
+  = f.inputs do
+    = link_to_function(icon('report_magnify') + 'Mostrar Reporte', "$(this).closest('form').submit();", :class => :button)
+    = link_to_function(icon('arrow_rotate_clockwise') + 'Limpiar', "$(this).closest('form').reset();", :class => :button)
+.clear
+
+

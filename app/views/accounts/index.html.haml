@@ -5,6 +5,11 @@
     - breadcrumb.item current_company.name.titlecase, root_path
     - breadcrumb.item "Cuentas", accounts_path
 
+- content_for(:controls) do
+  = controls do |c|
+    - c.item "Balance General", new_general_balance_report_path, :icon => "report_go"
+    - c.item "Balance de Sumas y Saldos", new_balance_report_path, :icon => "report_go"
+
 - if can?(:create, Account)
   - content_for(:controls) do
     = controls do |control|

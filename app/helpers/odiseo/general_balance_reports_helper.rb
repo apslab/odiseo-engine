@@ -1,0 +1,2 @@
+module Odiseo::GeneralBalanceReportsHelper
+end

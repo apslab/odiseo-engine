@@ -1,9 +1,9 @@
 - content_for(:title) do
-  Balance de Sumas y Saldos
+  Balance General
 
 - content_for(:controls) do
   = controls do |c|
-    - c.item "Balance General", new_general_balance_report_path, :icon => "report_go"
+    - c.item "Balance de Sumas y Saldos", new_balance_report_path, :icon => "report_go"
 
 = render 'form'
 
@@ -18,7 +18,7 @@
         %th.last Saldo
       - @accounts.each do |account|
         %tr{:class => cycle('odd', 'even')}
-          %td= account.name
+          %td= raw(account.name)
           %td.last{:style => 'text-align:right;'}
             = number_to_currency(account.debit) unless account.debit.zero?
           %td.last{:style => 'text-align:right;'}

@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   end
 
   resource :balance_report, :only => [:new, :create], :controller => 'odiseo/balance_reports'
+  resource :general_balance_report, :only => [:new, :create], :controller => 'odiseo/general_balance_reports'
 
   resources :accounts do
     collection do
