@@ -18,7 +18,11 @@ module Odiseo
     # POST /odiseo/reports.xml
     def create
       @balance_report = BalanceReport.new(params[:odiseo_balance_report])
-      @accounts = @balance_report.accounts
+      @accounts = @balance_report.accounts.map do |account|
+        account.name = current_company.accounts.leaves.detect{|leave| leave.id == account.name}.try(:name)
+        account
+      end
+
       flash.now[:notice] = t('flash.actions.index.notice') if @balance_report.valid? && @accounts.empty?
       respond_to do |format|
         format.html do
