@@ -19,7 +19,7 @@ module Odiseo
     def create
       @balance_report = BalanceReport.new(params[:odiseo_balance_report])
       @accounts = @balance_report.accounts.map do |account|
-        account.name = current_company.accounts.leaves.detect{|leave| 1*leave.id == 1*account.name}.try(:name)
+        account.name = current_company.accounts.leaves.detect{|leave| leave.id.to_i == account.name.to_i}.try(:name)
         account
       end
 
