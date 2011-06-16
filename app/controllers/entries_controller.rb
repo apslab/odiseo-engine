@@ -13,6 +13,9 @@ class EntriesController < AuthorizedController
     else
       @exercise = current_company.exercises.first
     end
+
+    return redirect_to new_exercise_path, :notice => 'Debe crear al menos un ejercicio' if @exercise.nil?
+
     
 =begin
     params[:search] ||= {}
