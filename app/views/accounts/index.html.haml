@@ -5,10 +5,19 @@
     - breadcrumb.item current_company.name.titlecase, root_path
     - breadcrumb.item "Cuentas", accounts_path
 
-- content_for(:controls) do
+-# content_for(:controls) do
   = controls do |c|
     - c.item "Balance General", new_general_balance_report_path, :icon => "report_go"
     - c.item "Balance de Sumas y Saldos", new_balance_report_path, :icon => "report_go"
+    - c.item "Movimientos entre Fechas", new_report_date_path, :icon => "report_go"
+
+
+- content_for(:sidebar) do
+  .block
+    %ul.navigation    
+      %li= link_to(icon("report_go") + " Balance General", new_general_balance_report_path)
+      %li= link_to(icon("report_go") + " Balance de Sumas y Saldos", new_balance_report_path)
+      %li= link_to(icon("report_go") + " Movimientos entre Fechas", new_report_date_path)
 
 - if can?(:create, Account)
   - content_for(:controls) do

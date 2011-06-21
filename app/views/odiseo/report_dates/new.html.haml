@@ -1,0 +1,31 @@
+- content_for(:title) do
+  Movimientos entre Fechas
+
+- content_for(:controls) do
+  = controls do |c|
+    - c.item "Balance General", new_general_balance_report_path, :icon => "report_go"
+    - c.item "Balance de Sumas y Saldos", new_balance_report_path, :icon => "report_go"
+
+= render 'form'
+
+- if @details.present? && @details.any?
+  .block
+    %h2= "Resultados"
+    %table.table
+      %tr
+        %th Cuenta
+        %th Fecha
+        %th Descripcion
+        %th Debe
+        %th Haber
+      - @details.each do |detail|
+        %tr
+          %td= detail.account.name
+          %td= detail.entry.date_on.to_s(:default)
+          %td= detail.description
+          %td= number_to_currency(detail.debit || 0)
+          %td= number_to_currency(detail.credit || 0)
+      %tr
+        %td{:colspan => 5, :align => :middle, :align => :center}= paginate(@details)
+
+.clear
