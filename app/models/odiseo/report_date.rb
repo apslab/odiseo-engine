@@ -30,6 +30,7 @@ module Odiseo
       Detail.includes(:entry, :account)
         .where(:account_id => exercise.company.accounts.leaves.map(&:id))
         .where(:entries => {:date_on => since_date..until_date, :exercise_id => exercise.id})
+        .order('entries.date_on')
     end
 
     def to_key

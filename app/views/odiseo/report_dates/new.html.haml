@@ -14,18 +14,20 @@
     %table.table
       %tr
         %th Cuenta
+        %th Asiento N°
         %th Fecha
         %th Descripcion
-        %th Debe
-        %th Haber
+        %th.last Debe
+        %th.last Haber
       - @details.each do |detail|
         %tr
           %td= detail.account.name
+          %td= "%09.0f" % detail.entry.id
           %td= detail.entry.date_on.to_s(:default)
           %td= detail.description
-          %td= number_to_currency(detail.debit || 0)
-          %td= number_to_currency(detail.credit || 0)
+          %td.last= number_to_currency(detail.debit || 0)
+          %td.last= number_to_currency(detail.credit || 0)
       %tr
-        %td{:colspan => 5, :align => :middle, :align => :center}= paginate(@details)
+        %td{:colspan => 6, :align => :middle, :align => :center}= paginate(@details)
 
 .clear

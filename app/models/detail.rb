@@ -17,6 +17,7 @@
 #
 
 class Detail < ActiveRecord::Base
+
   belongs_to :entry, :counter_cache => true
   belongs_to :account, :counter_cache => true
 
