@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{odiseo}
-  s.version = "0.4.11"
+  s.version = "0.5.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = [%q{AP System}]
-  s.date = %q{2011-06-16}
+  s.date = %q{2011-06-23}
   s.description = %q{Adminsitracion de contabilidad}
   s.email = %q{info@ap-sys.com.ar}
   s.extra_rdoc_files = [
@@ -30,12 +30,14 @@ Gem::Specification.new do |s|
     "app/controllers/exercises_controller.rb",
     "app/controllers/odiseo/balance_reports_controller.rb",
     "app/controllers/odiseo/general_balance_reports_controller.rb",
+    "app/controllers/odiseo/report_dates_controller.rb",
     "app/controllers/odiseo/reports_controller.rb",
     "app/helpers/accounts_helper.rb",
     "app/helpers/entries_helper.rb",
     "app/helpers/exercises_helper.rb",
     "app/helpers/odiseo/balance_reports_helper.rb",
     "app/helpers/odiseo/general_balance_reports_helper.rb",
+    "app/helpers/odiseo/report_dates_helper.rb",
     "app/helpers/odiseo/reports_helper.rb",
     "app/models/account.rb",
     "app/models/detail.rb",
@@ -44,6 +46,7 @@ Gem::Specification.new do |s|
     "app/models/odiseo/balance_report.rb",
     "app/models/odiseo/general_balance_report.rb",
     "app/models/odiseo/report.rb",
+    "app/models/odiseo/report_date.rb",
     "app/views/accounts/_account.html.haml",
     "app/views/accounts/_form.html.haml",
     "app/views/accounts/edit.html.haml",
@@ -67,6 +70,8 @@ Gem::Specification.new do |s|
     "app/views/odiseo/balance_reports/new.html.haml",
     "app/views/odiseo/general_balance_reports/_form.html.haml",
     "app/views/odiseo/general_balance_reports/new.html.haml",
+    "app/views/odiseo/report_dates/_form.html.haml",
+    "app/views/odiseo/report_dates/new.html.haml",
     "app/views/odiseo/reports/_form.html.haml",
     "app/views/odiseo/reports/new.html.haml",
     "config/routes.rb",
@@ -102,9 +107,9 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<meta_search>, [">= 0"])
       s.add_runtime_dependency(%q<meta_where>, [">= 0"])
       s.add_runtime_dependency(%q<prawn>, [">= 0"])
-      s.add_development_dependency(%q<rspec>, ["~> 2.3.0"])
-      s.add_development_dependency(%q<bundler>, ["~> 1.0.0"])
-      s.add_development_dependency(%q<jeweler>, ["~> 1.6.0"])
+      s.add_development_dependency(%q<rspec>, [">= 0"])
+      s.add_development_dependency(%q<bundler>, [">= 0"])
+      s.add_development_dependency(%q<jeweler>, [">= 0"])
       s.add_development_dependency(%q<rcov>, [">= 0"])
     else
       s.add_dependency(%q<haml-rails>, [">= 0"])
@@ -117,9 +122,9 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<meta_search>, [">= 0"])
       s.add_dependency(%q<meta_where>, [">= 0"])
       s.add_dependency(%q<prawn>, [">= 0"])
-      s.add_dependency(%q<rspec>, ["~> 2.3.0"])
-      s.add_dependency(%q<bundler>, ["~> 1.0.0"])
-      s.add_dependency(%q<jeweler>, ["~> 1.6.0"])
+      s.add_dependency(%q<rspec>, [">= 0"])
+      s.add_dependency(%q<bundler>, [">= 0"])
+      s.add_dependency(%q<jeweler>, [">= 0"])
       s.add_dependency(%q<rcov>, [">= 0"])
     end
   else
@@ -133,9 +138,9 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<meta_search>, [">= 0"])
     s.add_dependency(%q<meta_where>, [">= 0"])
     s.add_dependency(%q<prawn>, [">= 0"])
-    s.add_dependency(%q<rspec>, ["~> 2.3.0"])
-    s.add_dependency(%q<bundler>, ["~> 1.0.0"])
-    s.add_dependency(%q<jeweler>, ["~> 1.6.0"])
+    s.add_dependency(%q<rspec>, [">= 0"])
+    s.add_dependency(%q<bundler>, [">= 0"])
+    s.add_dependency(%q<jeweler>, [">= 0"])
     s.add_dependency(%q<rcov>, [">= 0"])
   end
 end
