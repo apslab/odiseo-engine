@@ -46,6 +46,10 @@ class Exercise < ActiveRecord::Base
     end
   end
 
+  def self.from(date)
+    where('started_on >= :date AND finished_on <= :date', :date => date.to_date.to_s(:db)).first() || first
+  end
+
   def period
     [started_on,finished_on]
   end
@@ -68,3 +72,4 @@ class Exercise < ActiveRecord::Base
   end
 
 end
+
