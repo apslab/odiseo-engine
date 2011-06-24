@@ -15,6 +15,15 @@ class AccountsController < AuthorizedController
     flash[:notice] = t('flash.actions.index.notice') if @accounts.empty?
 
     respond_with(@accounts) do |format|
+
+      format.html do
+
+        #@graph_accounts_credits = current_company.accounts.roots.map do |account|
+        #  [account.name, account.self_and_descendants.map{|a|a.details.balance.to_f}.sum]
+        #end
+
+      end
+
       format.json do
         converter = Proc.new do |item|
           parent, children = item
@@ -24,6 +33,7 @@ class AccountsController < AuthorizedController
 
         render :json => current_company.accounts.arrange.map(&converter)
       end
+
     end
   end
 

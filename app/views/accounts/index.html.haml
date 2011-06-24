@@ -14,7 +14,7 @@
 
 - content_for(:sidebar) do
   .block
-    %ul.navigation    
+    %ul.navigation
       %li= link_to(icon("report_go") + " Balance General", new_general_balance_report_path)
       %li= link_to(icon("report_go") + " Balance de Sumas y Saldos", new_balance_report_path)
       %li= link_to(icon("report_go") + " Movimientos entre Fechas", new_report_date_path)
@@ -27,7 +27,48 @@
 - content_for(:head) do
   = javascript_include_tag('jquery.cookie', 'jquery.treeview', 'jquery.treeview.edit', 'jquery.treeview.async')
   = stylesheet_link_tag('jquery.treeview', :media => 'screen, projection')
-  = javascript_include_tag('jquery.tools.min.js')
+  = javascript_include_tag('jquery.tools.min.js', 'highcharts')
+  -#
+    :javascript
+      var chart;
+      $(document).ready(function() {
+        chart = new Highcharts.Chart({
+          chart: {
+            renderTo: 'graphcredits',
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false
+          },
+          title: {
+            text: 'Balance de Sumas y Saldos - Haber'
+          },
+          tooltip: {
+            formatter: function() {
+              return '<b>'+ this.point.name +'</b>: '+ this.y +' %';
+            }
+          },
+          plotOptions: {
+            pie: {
+              allowPointSelect: true,
+              cursor: 'pointer',
+              dataLabels: {
+                enabled: true,
+                color: '#000000',
+                connectorColor: '#000000',
+                formatter: function() {
+                  return '<b>'+ this.point.name +'</b>: '+ this.y +' %';
+                }
+              }
+            }
+          },
+          series: [{
+            type: 'pie',
+            name: 'Balance',
+            data: #{@graph_accounts_credits.to_json}
+          }]
+        });
+      });
+
   :javascript
     var makeOverloads = function(){
       $("a.overlay-handler, a[rel='#overlay']").overlay({
@@ -47,9 +88,11 @@
         }
       });
     };
+
     $(document).ready(function(){
       $('#account-list').treeview({url: location.href, collapsed: true, onLoad: makeOverloads});
     });
+
   :css
     #overlay {
       background-image:url(http://static.flowplayer.org/img/overlay/transparent.png);
@@ -94,7 +137,19 @@
       width:35px;
     }
 
-%ul#account-list
+.block
+  #graphcredits
+.clear
+
+.block
+  #graphdebits
+.clear
+
+.block
+  %ul#account-list
+
+
+
 
 #overlay.apple_overlay.overlay-handler
   .contentWrap

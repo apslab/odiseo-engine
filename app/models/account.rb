@@ -26,7 +26,19 @@ class Account < ActiveRecord::Base
 
   belongs_to :company
   has_many :exercises, :through => :company, :readonly => true
-  has_many :details
+  has_many :details do
+    def credit
+      sum(:credit)
+    end
+
+    def debit
+      sum(:debit)
+    end
+
+    def balance
+      sum('credit - debit').to_f.abs
+    end
+  end
 
   validates_presence_of :name
   validates_uniqueness_of :name, :scope => [:company_id, :parent_id]
@@ -51,3 +63,4 @@ class Account < ActiveRecord::Base
   end
 
 end
+
