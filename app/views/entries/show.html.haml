@@ -31,7 +31,7 @@
         - @entry.details.each do |detail|
           %tr{:class => "#{cycle('odd','even')}"}
             %td= detail.description
-            %td= raw detail.account.self_and_ancestors.map(&:name).join(' &raquo; ')
+            %td= raw detail.account.name
             %td.last{:style => 'text-align:right;'}= number_to_currency(detail.debit)
             %td.last{:style => 'text-align:right;'}= number_to_currency(detail.credit)
             %td.last{:style => 'text-align:right;'}= number_to_currency(detail.balance)
