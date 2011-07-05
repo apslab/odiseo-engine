@@ -11,6 +11,9 @@
 - if @details.present? && @details.any?
   .block
     %h2= "Resultados"
+    .clear
+    .block{:style => 'margin:20px;'}= paginate(@details, :method => :post)
+    .clear
     %table.table
       %tr
         %th Cuenta
@@ -27,7 +30,10 @@
           %td= detail.description
           %td.last= number_to_currency(detail.debit || 0)
           %td.last= number_to_currency(detail.credit || 0)
-      %tr
-        %td{:colspan => 6, :align => :middle, :align => :center}= paginate(@details)
+    .clear
+    .block{:style => 'margin:20px'}= paginate(@details, :method => :post)
+    %br
+    .clear
 
 .clear
+

@@ -1,6 +1,6 @@
 class ExercisesController < AuthorizedController
 
-  before_filter :find_exercise, :except => [:index, :opened, :closed, :new, :create]
+  before_filter :find_exercise, :except => [:index, :opened, :closed, :new, :create, :from_date]
 
   respond_to :html, :xml, :json
 
@@ -32,6 +32,27 @@ class ExercisesController < AuthorizedController
     flash[:notice] = t('flash.actions.index.notice') if @exercises.empty?
     respond_with(@exercises) do |format|
       format.html { render :action => :index }
+    end
+  end
+
+  # GET /exercises/from_date
+  def from_date
+    @exercise = current_company.exercises.from_date_or_default(params[:d])
+    @accounts = @exercise.accounts
+    respond_with(@accounts) do |format|
+      format.html do 
+        render :inline => view_context.options_for_select([['-- seleccione una cuenta --', nil]]+ @accounts.leaves.map{|a|[[a.code, a.name].compact.join(' &raquo; ').html_safe, a.id]}) 
+      end
+
+      format.json do
+        data = {
+          :started_on => @exercise.started_on,
+          :finished_on => @exercise.finished_on,
+          :accounts => view_context.options_for_select([['-- seleccione una cuenta --', nil]]+ @accounts.leaves.map{|a|[[a.code, a.name].compact.join(' &raquo; ').html_safe, a.id]}) 
+        }
+
+        render :json => data
+      end
     end
   end
 

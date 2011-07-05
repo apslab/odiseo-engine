@@ -38,6 +38,7 @@ class Exercise < ActiveRecord::Base
   default_scope order('started_on DESC')
   scope :opened, where(:close => false)
   scope :closed, where(:close => true)
+  scope :belongs_to_date,
 
   def self.setup
     new do |e|
@@ -46,8 +47,12 @@ class Exercise < ActiveRecord::Base
     end
   end
 
-  def self.from(date)
-    where('started_on >= :date AND finished_on <= :date', :date => date.to_date.to_s(:db)).first() || first
+  def self.from_date(date)
+    where('started_on >= :date AND finished_on <= :date', :date => date.to_date.to_s(:db)).first
+  end
+
+  def self.from_date_or_default(date=nil)
+    self.from_date(date || Date.today) || first
   end
 
   def period

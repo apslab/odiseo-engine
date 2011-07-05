@@ -22,10 +22,11 @@
 #
 
 class Account < ActiveRecord::Base
-  acts_as_nested_set
+  acts_as_nested_set :scope => :exercise
 
-  belongs_to :company
-  has_many :exercises, :through => :company, :readonly => true
+  belongs_to :exercise
+  has_one :company, :through => :exercise
+
   has_many :details do
     def credit
       sum(:credit)
@@ -36,19 +37,21 @@ class Account < ActiveRecord::Base
     end
 
     def balance
-      sum('credit - debit').to_f.abs
+      sum('credit - debit').to_f
     end
   end
 
   validates_presence_of :name
-  validates_uniqueness_of :name, :scope => [:company_id, :parent_id]
-  validates_uniqueness_of :code, :scope => [:company_id]
+  validates_uniqueness_of :name, :scope => [:exercise_id, :parent_id], :on => :update
+  validates_uniqueness_of :code, :scope => [:exercise_id, :parent_id], :on => :update
 
   before_destroy :account_in_use?
 
+=begin
   def self.from(user)
     where(:company_id => (user.try(:companies)||[]).map(&:id))
   end
+=end
 
   def label_html
     @label ||= [name.capitalize, code_html].compact.join(' ')

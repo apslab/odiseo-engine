@@ -22,7 +22,7 @@
 - if can?(:create, Account)
   - content_for(:controls) do
     = controls do |control|
-      - control.item 'Nueva Cuenta', new_account_url, :icon => 'add', :link_options => {:rel => '#overlay', :class => 'overlay-handler', :style => 'text-decoration:none'}
+      - control.item 'Nueva Cuenta', new_exercise_account_url(@current_exercise), :icon => 'add', :link_options => {:rel => '#overlay', :class => 'overlay-handler', :style => 'text-decoration:none'}
 
 - content_for(:head) do
   = javascript_include_tag('jquery.cookie', 'jquery.treeview', 'jquery.treeview.edit', 'jquery.treeview.async')

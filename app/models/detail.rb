@@ -22,7 +22,7 @@ class Detail < ActiveRecord::Base
   belongs_to :account, :counter_cache => true
 
   validates_presence_of :account
-  validate :debit_and_credit_non_zero, :debit_and_credit_exclusive_value
+  validate :debit_and_credit_non_zero, :debit_and_credit_exclusive_value, :valid_associated_account
 
   def balance
     credit - debit
@@ -42,4 +42,7 @@ class Detail < ActiveRecord::Base
     end
   end
 
+  def valid_associated_account
+    errors.add(:account_id, 'La cuenta no pertenece a este ejercicio') unless entry.exercise.accounts.exists?(account_id)
+  end
 end

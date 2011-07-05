@@ -4,12 +4,12 @@
 - content_for(:breadcrumbs) do
   = breadcrumbs do |breadcrumb|
     - breadcrumb.item current_company.name.titlecase, root_path
-    - breadcrumb.item "Cuentas", accounts_path
-    - breadcrumb.item 'Nuevo', new_account_path, :active => true
+    - breadcrumb.item "Cuentas", exercise_accounts_path(@current_exercise)
+    - breadcrumb.item 'Nuevo', new_exercise_account_path(@current_exercise), :active => true
 
 - content_for(:controls) do
   = controls do |control|
-    - control.item t('scaffold.actions.back').titlecase, accounts_path, :icon => 'application_view_list'
+    - control.item t('scaffold.actions.back').titlecase, exercise_accounts_path(@current_exercise), :icon => 'application_view_list'
 
 = render 'form'
 
