@@ -22,7 +22,7 @@ class Detail < ActiveRecord::Base
   belongs_to :account, :counter_cache => true
 
   validates_presence_of :account
-  validate :debit_and_credit_non_zero, :debit_and_credit_exclusive_value#, :valid_associated_account
+  validate :debit_and_credit_non_zero, :debit_and_credit_exclusive_value, :valid_associated_account
 
   def balance
     credit - debit
