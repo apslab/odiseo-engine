@@ -32,6 +32,7 @@
           %tr{:class => "#{cycle('odd','even')}"}
             %td= detail.description
             %td= raw detail.account.label_html
+            %td= raw detail.account.name
             %td.last{:style => 'text-align:right;'}= number_to_currency(detail.debit)
             %td.last{:style => 'text-align:right;'}= number_to_currency(detail.credit)
             %td.last{:style => 'text-align:right;'}= number_to_currency(detail.balance)
@@ -40,7 +41,6 @@
           %th.last{:style => 'text-align:right;'}=number_to_currency(@entry.details.debit)
           %th.last{:style => 'text-align:right;'}=number_to_currency(@entry.details.credit)
           %th.last{:style => 'text-align:right;'}=number_to_currency(@entry.details.balance)
-
 
 .clear
 
