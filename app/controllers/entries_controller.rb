@@ -50,7 +50,7 @@ class EntriesController < AuthorizedController
   # POST /entries.json
   # POST /entries.xml
   def create
-    @entry = Entries.new(params[:entry])
+    @entry = Entry.new(params[:entry])
     flash[:notice] = t('flash.actions.create.notice', :resource_name => Entry.model_name.human) if @entry.save
     respond_with(@entry, :location => entries_path)
   end
