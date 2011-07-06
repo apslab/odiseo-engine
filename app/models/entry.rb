@@ -44,7 +44,7 @@ class Entry < ActiveRecord::Base
   validates_presence_of :exercise, :date_on, :description
   validate :check_balance, :check_many_entries, :date_between_exercise_date
 
-  #before_validation :link_exercise_from_date_on#, :if => :date_on_changed?
+  before_validation :link_exercise_from_date_on#, :if => :date_on_changed?
 
   before_destroy :destroy_forbiden
 
@@ -67,7 +67,8 @@ class Entry < ActiveRecord::Base
   end
 
   def link_exercise_from_date_on
-    exercise_id = Exercise.from_date(date_on).try(:id)
+    # FIXME: on migration don't work
+    exercise_id = Exercise.from_date(date_on).try(:id) if env['COMPANY_ID'].nil?
   end
 
   def destroy_forbiden
