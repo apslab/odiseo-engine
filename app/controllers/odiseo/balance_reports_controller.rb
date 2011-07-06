@@ -7,7 +7,7 @@ module Odiseo
     # GET /odiseo/reports/new.json
     # GET /odiseo/reports/new.xml
     def new
-      @balance_report = BalanceReport.new
+      @balance_report = BalanceReport.new(current_company)
       respond_to do |format|
         format.html # .html.erb
       end
