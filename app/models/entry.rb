@@ -68,7 +68,7 @@ class Entry < ActiveRecord::Base
 
   def link_exercise_from_date_on
     # FIXME: on migration don't work
-    exercise_id = Exercise.from_date(date_on).try(:id) if env['COMPANY_ID'].nil?
+    exercise_id = Exercise.from_date(date_on).try(:id) if ENV['COMPANY_ID'].nil?
   end
 
   def destroy_forbiden
