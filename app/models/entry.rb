@@ -48,6 +48,7 @@ class Entry < ActiveRecord::Base
   def self.setup
     new do |entry|
       entry.date_on = Date.today
+      #entry.exercise_id = 1 #current_user.current_company.exercises.from(entry.date_on).id
       2.times{entry.details.build}
     end
   end
@@ -59,7 +60,7 @@ class Entry < ActiveRecord::Base
   end
 
   def date_between_exercise_date
-    errors.add(:base, 'La fecha debe estar incluida en el periodo del ejercicio') unless date_on.between?(*exercise.period)
+    errors.add(:base, 'La fecha debe estar incluida en el periodo del ejercicio ' + exercise.started_on.to_s + ' a ' + exercise.finished_on.to_s) unless date_on.between?(exercise.started_on,exercise.finished_on)
   end
 
   def check_balance

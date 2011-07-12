@@ -46,6 +46,9 @@ class EntriesController < AuthorizedController
   # GET /entries/new.xml
   def new
     @entry = Entry.setup
+    current_user.current_company.exercises do |exercise|
+      @entry.exercise_id = exercise.id if @entry.date_on.between?(exercise.started_on,exercise.finished_on)
+    end
     respond_with(@entry)
   end
 
