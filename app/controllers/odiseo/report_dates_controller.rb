@@ -20,8 +20,7 @@ module Odiseo
     def create
       @report_date = ReportDate.new(params[:odiseo_report_date])
       @details = @report_date.details.page(params[:page])
-      flash.clear
-      flash[:notice] = t('flash.actions.index.notice') if @report_date.valid? && @details.empty?
+      flash.now[:notice] = t('flash.actions.index.notice') if @report_date.valid? && @details.empty?
       respond_to do |format|
         format.html do
           render :new
@@ -31,3 +30,4 @@ module Odiseo
 
   end
 end
+

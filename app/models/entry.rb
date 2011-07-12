@@ -16,6 +16,7 @@
 
 class Entry < ActiveRecord::Base
   paginates_per 30
+
   default_scope order('exercise_id DESC, date_on DESC')
 
   belongs_to :exercise, :counter_cache => true
@@ -43,6 +44,8 @@ class Entry < ActiveRecord::Base
   validates_presence_of :exercise, :date_on, :description
   validate :check_balance, :check_many_entries, :date_between_exercise_date
 
+  before_validation :link_exercise_from_date_on#, :if => :date_on_changed?
+
   before_destroy :destroy_forbiden
 
   def self.setup
@@ -54,6 +57,20 @@ class Entry < ActiveRecord::Base
   end
 
   protected
+
+  def _exercise_id
+    target = _read_attribute(:exercise_id)
+    target ||= Exercise.from_date_or_default(read_attribute(:date_on)).try(:id)
+
+    errors.add(:base, 'Debe crear al menos un ejercicio para poder consumir el sitema.') if target.nil?
+
+    return target
+  end
+
+  def link_exercise_from_date_on
+    # FIXME: on migration don't work
+    exercise_id = Exercise.from_date(date_on).try(:id) if ENV['COMPANY_ID'].nil?
+  end
 
   def destroy_forbiden
     raise "No es posible borrar asientos ya generados!"

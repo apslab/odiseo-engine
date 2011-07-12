@@ -4,15 +4,15 @@
 - content_for(:breadcrumbs) do
   = breadcrumbs do |breadcrumb|
     - breadcrumb.item current_company.name.titlecase, root_path
-    - breadcrumb.item 'Cuentas', accounts_path
-    - breadcrumb.item @account.name.titlecase, account_path(@account)
-    - breadcrumb.item 'Ver', account_path(@account), :active => true
+    - breadcrumb.item 'Cuentas', exercise_accounts_path(@current_exercise)
+    - breadcrumb.item @account.name.titlecase, exercise_account_path(@current_exercise, @account)
+    - breadcrumb.item 'Ver', exercise_account_path(@current_exercise, @account), :active => true
 
 - content_for(:controls) do
   = controls do |control|
-    - control.item t('scaffold.actions.edit').titlecase, edit_account_path(@account), :icon => 'application_edit'
-    - control.item t('scaffold.actions.back').titlecase, accounts_path, :icon => 'application_view_list'
-    - control.item t('scaffold.actions.back').titlecase, accounts_path, :icon => 'application_view_list'
+    - control.item t('scaffold.actions.edit').titlecase, edit_exersice_account_path(@current_exercise, @account), :icon => 'application_edit'
+    - control.item t('scaffold.actions.back').titlecase, exercise_accounts_path(@current_exercise), :icon => 'application_view_list'
+    - control.item t('scaffold.actions.back').titlecase, exercise_accounts_path(@current_exercise), :icon => 'application_view_list'
 
 = semantic_attributes_for(@account) do |s|
   = s.attributes(Account.human_name + ' Info') do

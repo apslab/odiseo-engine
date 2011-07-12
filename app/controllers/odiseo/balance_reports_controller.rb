@@ -7,7 +7,7 @@ module Odiseo
     # GET /odiseo/reports/new.json
     # GET /odiseo/reports/new.xml
     def new
-      @balance_report = BalanceReport.new
+      @balance_report = BalanceReport.new(current_company)
       respond_to do |format|
         format.html # .html.erb
       end
@@ -17,11 +17,8 @@ module Odiseo
     # POST /odiseo/reports.json
     # POST /odiseo/reports.xml
     def create
-      @balance_report = BalanceReport.new(params[:odiseo_balance_report])
-      @accounts = @balance_report.accounts.map do |account|
-        account.name = current_company.accounts.leaves.detect{|leave| leave.id.to_i == account.name.to_i}.try(:name)
-        account
-      end
+      @balance_report = BalanceReport.new(current_company, params[:odiseo_balance_report])
+      @accounts = @balance_report.accounts.page(params[:page])
 
       flash.now[:notice] = t('flash.actions.index.notice') if @balance_report.valid? && @accounts.empty?
       respond_to do |format|
@@ -33,3 +30,4 @@ module Odiseo
 
   end
 end
+

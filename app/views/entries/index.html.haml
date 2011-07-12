@@ -17,27 +17,31 @@
 .block
   %h2 Asientos
   - if @entries.any?
-    %table
+    .clear
+    .block{:style => 'margin:20px;'}= paginate(@entries)
+    .clear
+    %table.table
       %tr
         %th= Entry.human_attribute_name('description')
         %th= Entry.human_attribute_name('date_on')
-        %th Debe
-        %th Haber
-        %th Saldo
-        %th
-        %th
+        %th.last Debe
+        %th.last Haber
+        %th.last Saldo
         %th
 
       - @entries.each do |entry|
         %tr
           %td= entry.description
           %td= entry.date_on.to_s(:default)
-          %td= number_to_currency(entry.details.debit)
-          %td= number_to_currency(entry.details.credit)
-          %td= number_to_currency(entry.details.balance)
-          %td= link_to icon('application_get', :small, :title => t('scaffold.actions.show').titlecase), entry
-          %td= link_to icon('application_edit', :small, :title => t('scaffold.actions.edit').titlecase), edit_entry_path(entry)
-  %br
-  .pagination= paginate @entries
-  .clear
+          %td.last= number_to_currency(entry.details.debit)
+          %td.last= number_to_currency(entry.details.credit)
+          %td.last= number_to_currency(entry.details.balance)
+          %td.last
+            = link_to icon('application_get', :small, :title => t('scaffold.actions.show').titlecase), entry
+            = link_to icon('application_edit', :small, :title => t('scaffold.actions.edit').titlecase), edit_entry_path(entry)
+    .clear
+    .block{:style => 'margin:20px;'}= paginate(@entries)
+    %br
+    .clear
+.clear
 

@@ -35,6 +35,10 @@ module Odiseo
     end
 
     def accounts
+      Kaminari::PaginatableArray.new(to_ostruct)
+    end
+
+    def to_ostruct
       return data if data.empty?
 
       icons = %w(blue green orange pink red yellow purple)

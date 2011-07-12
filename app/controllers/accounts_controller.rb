@@ -1,5 +1,6 @@
 class AccountsController < AuthorizedController
 
+  before_filter :find_current_exercise
   before_filter :find_parent
   before_filter :find_account, :except => [:index, :new, :create]
 
@@ -11,7 +12,7 @@ class AccountsController < AuthorizedController
   # GET /accounts.json
   # GET /accounts.xml
   def index
-    @accounts = (@parent.nil?) ? current_company.accounts.roots : @parent.children
+    @accounts = (@parent.nil?) ? @current_exercise.accounts.roots : @parent.children
     flash[:notice] = t('flash.actions.index.notice') if @accounts.empty?
 
     respond_with(@accounts) do |format|
@@ -31,7 +32,7 @@ class AccountsController < AuthorizedController
            :children => children.map(&converter)}
         end
 
-        render :json => current_company.accounts.arrange.map(&converter)
+        render :json => @current_exercise.accounts.arrange.map(&converter)
       end
 
     end
@@ -48,7 +49,7 @@ class AccountsController < AuthorizedController
   # GET /accounts/new.json
   # GET /accounts/new.xml
   def new
-    @account = Account.new
+    @account = @current_exercise.accounts.build
     respond_with(@account)
   end
 
@@ -65,15 +66,14 @@ class AccountsController < AuthorizedController
   def create
     params[:account].update(:parent_id => @parent.id) unless @parent.nil?
 
-    @account = Account.new(params[:account].update(:company_id => current_company.id))
+    @account = Account.new(params[:account].update(:exercise_id => @current_exercise.id))
     if @account.save
       flash[:notice] = t('flash.actions.create.notice', :resource_name => Account.model_name.human)
-      #@account.move_to_child_of(@parent.id) unless @parent.nil?
     else
       flash[:error] = @account.errors.full_messages.join('<br />')
     end
-    #respond_with(@account, :location => accounts_path)
-    redirect_to(accounts_path)
+
+    redirect_to(exercise_accounts_path(@current_exercise))
   end
 
   # PUT /accounts/1
@@ -81,7 +81,7 @@ class AccountsController < AuthorizedController
   # PUT /accounts/1.xml
   def update
     flash[:notice] = t('flash.actions.update.notice', :resource_name => Account.model_name.human) if @account.update_attributes(params[:account])
-    respond_with(@account, :location => accounts_path)
+    respond_with(@account, :location => exercise_accounts_path(@current_exercise))
   end
 
   # DELETE /accounts/1
@@ -92,42 +92,26 @@ class AccountsController < AuthorizedController
       flash[:notice] = t('flash.actions.destroy.notice', :resource_name => Account.model_name.human) if @account.destroy
     rescue Apslabs::Exceptions::HasDetails => e
       flash[:error] = e.message
-      redirect_to(accounts_path)
+      redirect_to(exercise_accounts_path(@current_exercise))
     end
 
-    respond_with(@account)
+    respond_with(@account, :location => exercise_accounts_path(@current_exercise))
   end
-
-=begin
-  def print_movim
-      @account_movim_list = @account.details
-
-      respond_to do |format|
-        format.html # .html.erb
-        format.xml  { render :xml => @account_movim_list }
-#       format.pdf { render :pdf => "cc_#{@cliente.id}",
-#                         :template => 'clientes/cuentacorriente.html.erb',
-#                         :show_as_html => params[:debug].present?,      # allow debuging based on url param
-#                         :layout => 'pdf.html.erb',
-#                         :footer => { :right => "Reporte generado el #{l DateTime.current}" }
-#                   }
-#      end
-    end
-  end
-
-  def list_account
-    respond_with(@account)
-  end
-=end
 
   protected
 
+  def find_current_exercise
+    @current_exercise = current_company.exercises.find(params[:exercise_id]) || current_company.exercises.from(Date.today) || current_company.exercises.first
+    return redirect_to new_exercise_path, :notice => 'Debe crear al menos un ejercicio' if @current_exercise.nil?
+  end
+
   def find_parent
-    @parent = current_company.accounts.find(params[:account_id]) unless params[:account_id].blank?
+    @parent = @current_exercise.accounts.find(params[:account_id]) unless params[:account_id].blank?
   end
 
   def find_account
-    @account = current_company.accounts.find(params[:id])
+    @account = @current_exercise.accounts.find(params[:id])
   end
+
 end
 

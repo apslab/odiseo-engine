@@ -18,7 +18,7 @@ module Odiseo
     # POST /odiseo/reports.xml
     def create
       @general_balance_report = GeneralBalanceReport.new(params[:odiseo_general_balance_report])
-      @accounts = @general_balance_report.accounts
+      @accounts = @general_balance_report.accounts.page(params[:page])
       flash.now[:notice] = t('flash.actions.index.notice') if @general_balance_report.valid? && @accounts.empty?
       respond_to do |format|
         format.html do
@@ -29,3 +29,4 @@ module Odiseo
 
   end
 end
+

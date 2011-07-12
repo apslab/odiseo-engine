@@ -8,17 +8,24 @@
 - if @details.present? && @details.any?
   .block
     %h2= "Resultados"
-    %table
+    .clear
+    .block{:style => 'margin:20px;'}= paginate(@details, :method => :post)
+    .clear
+    %table.table
       %tr
         %th Fecha
         %th Descripcion
-        %th Debe
-        %th Haber
+        %th.last Debe
+        %th.last Haber
       - @details.each do |detail|
         %tr
           %td= detail.entry.date_on.to_s(:default)
           %td= detail.description
-          %td= number_to_currency(detail.debit || 0)
-          %td= number_to_currency(detail.credit || 0)
-
+          %td.last= number_to_currency(detail.debit || 0)
+          %td.last= number_to_currency(detail.credit || 0)
+    .clear
+    .block{:style => 'margin:20px'}= paginate(@details, :method => :post)
+    %br
+    .clear
 .clear
+

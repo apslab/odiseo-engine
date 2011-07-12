@@ -15,19 +15,9 @@ class EntriesController < AuthorizedController
     end
 
     return redirect_to new_exercise_path, :notice => 'Debe crear al menos un ejercicio' if @exercise.nil?
-
-    
-=begin
-    params[:search] ||= {}
-
-    @entries = @exercise.entries.scoped(:include => :details)
-
-    @entries.where(['entries.detail LIKE ?', params[:search][:detail]]) unless params[:search][:detail].blank?
-
-    @entries = @entries.page(params[:page])
-=end
-    
+  
     @entries = @exercise.entries.page(params[:page])
+    #@entries = Entry.where(:exercise_id => @exercise.id).page(params[:page])
 
     flash.now[:notice] = t('flash.actions.index.notice') if @entries.empty?
 

@@ -71,17 +71,17 @@
 = semantic_form_for @entry do |form|
   = form.semantic_errors
 
-  = form.inputs(:class => :column_left) do
-    = form.input :exercise, :collection => current_company.exercises.map{|e|[e.label, e.id]}, :prompt => false
-  = form.inputs(:class => :column_right) do
-    = form.input :date_on, :as => :datepicker
-  .clear
+  -#
+    = form.inputs(:class => :column_left) do
+      = form.input :exercise, :collection => current_company.exercises.map{|e|[e.label, e.id]}, :prompt => false
   = form.inputs do
-    = form.input :description
+    = form.input :date_on, :as => :datepicker
+    = form.input :description, :input_html => {:style => 'float:left;'}
+
+  .clear
 
   = form.inputs do
     = link_to_add_association icon('add', :small, :style => 'vertical-align:middle;')+' Agregar Detalle', form, :details, 'data-association-insertion-position' => :after, 'data-association-insertion-node' => 'h2.details_title', :class => 'global_button button'
-
     %h2.details_title Detalles
 
     = form.semantic_fields_for :details do |detail|
@@ -104,3 +104,51 @@
 
   = render('shared/common_form_buttons')
 
+- content_for(:head) do
+  :javascript
+    var exercise_started_on = new Date();
+    exercise_started_on.setTime(Date.parse(#{@entry.exercise.started_on.to_json}));
+    var exercise_finished_on = new Date();
+    exercise_finished_on.setTime(Date.parse(#{@entry.exercise.finished_on.to_json}));
+    var accounts = #{options_for_select([['-- seleccione una cuenta --', nil]]+ @entry.exercise.accounts.leaves.map{|a|[[a.code, a.name].compact.join(' &raquo; ').html_safe, a.id]}).to_json};
+
+    var changeExerciseFor = function(date){
+      paramDate = new Date();
+      paramDate.setTime(Date.parse(date));
+
+      console.log('paramDate:' + paramDate);
+      console.log('exercise_started_on:' + exercise_started_on);
+      console.log('exercise_finished_on:' + exercise_finished_on);
+
+      result = (paramDate < exercise_started_on || paramDate > exercise_finished_on || $.isEmptyObject(accounts)) 
+      console.log('result:' + result);
+      return(result);
+    }
+
+    var checkDataForDate = function(date){
+      if (changeExerciseFor(date)){
+        $.getJSON('/exercises/from_date?d=' + date, function(data){
+            exercise_started_on.setTime(Date.parse(data.started_on));
+            exercise_finished_on.setTime(Date.parse(data.finished_on));
+            accounts = data.accounts;
+            populateDataForSelectAccount('.select_for_accounts', true);
+        });
+      }
+    }
+
+    var populateDataForSelectAccount = function(selector, skip){
+      if(!skip) checkDataForDate($('#entry_date_on').val())
+      $(selector).html(accounts);      
+    }
+
+    $.datepicker.setDefaults({
+      showOn: 'both',
+      buttonImageOnly: true,
+      buttonImage: 'calendar.gif',
+      buttonText: 'Calendar',
+      onSelect: function(dateText, inst){checkDataForDate(dateText);} 
+    });
+
+    $(document).ready(function(){
+      $("a.add_fields").data("insertion-callback", function(){populateDataForSelectAccount(this.find('.select_for_accounts').first());});
+    });

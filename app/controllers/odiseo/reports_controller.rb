@@ -21,9 +21,8 @@ module Odiseo
     # POST /odiseo/reports.xml
     def create
       @report = Report.new(@account, params[:odiseo_report])
-      @details = @report.details
-      flash.clear
-      flash[:notice] = t('flash.actions.index.notice') if @report.valid? && @details.empty?
+      @details = @report.details.page(params[:page])
+      flash.now[:notice] = t('flash.actions.index.notice') if @report.valid? && @details.empty?
       respond_to do |format|
         format.html do
           render :new
@@ -38,3 +37,4 @@ module Odiseo
     end
   end
 end
+

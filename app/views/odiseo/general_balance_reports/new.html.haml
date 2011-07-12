@@ -11,7 +11,10 @@
 - if @accounts.present? && @accounts.any?
   .block
     %h2= "Resultados"
-    %table{:class => :table}
+    .clear
+    .block{:style => 'margin:20px;'}= paginate(@accounts, :method => :post)
+    .clear
+    %table.table
       %tr
         %th Cuenta
         %th.last Debe
@@ -25,5 +28,9 @@
           %td.last{:style => 'text-align:right;'}
             = number_to_currency(account.credit) unless account.credit.zero?
           %td.last{:style => 'text-align:right;'}= number_to_currency(account.debit - account.credit || 0)
-
+    .clear
+    .block{:style => 'margin:20px;'}= paginate(@accounts, :method => :post)
+    %br
+    .clear
 .clear
+
