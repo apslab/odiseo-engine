@@ -68,7 +68,7 @@
       return(r);
     };
 
-= semantic_form_for @entry do |form|
+= semantic_form_for [@entry.exercise,@entry] do |form|
   = form.semantic_errors
 
   -#

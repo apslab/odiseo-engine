@@ -12,7 +12,7 @@
 - if can?(:create, Entry)
   - content_for(:controls) do
     = controls do |control|
-      - control.item t('scaffold.actions.new', :item => Entry.model_name.human).titlecase, new_entry_path, :icon => 'add'  
+      - control.item t('scaffold.actions.new', :item => Entry.model_name.human).titlecase, new_exercise_entry_path(@exercise), :icon => 'add'  
 
 .block
   %h2 Asientos

@@ -36,9 +36,13 @@ class EntriesController < AuthorizedController
   # GET /entries/new.xml
   def new
     @entry = Entry.setup
-    current_user.current_company.exercises do |exercise|
-      @entry.exercise_id = exercise.id if @entry.date_on.between?(exercise.started_on,exercise.finished_on)
-    end
+    @entry.exercise = Exercise.find(params[:exercise_id])
+    
+    logger.debug @entry.exercise
+    
+    #current_user.current_company.exercises do |exercise|
+    #  @entry.exercise_id = exercise.id if @entry.date_on.between?(exercise.started_on,exercise.finished_on)
+    #end
     respond_with(@entry)
   end
 
@@ -55,7 +59,8 @@ class EntriesController < AuthorizedController
   def create
     @entry = Entry.new(params[:entry])
     flash[:notice] = t('flash.actions.create.notice', :resource_name => Entry.model_name.human) if @entry.save
-    respond_with(@entry, :location => entries_path)
+    #respond_with(@entry, :location => entries_path)
+    respond_with(@entry) # show
   end
 
   # PUT /entries/1

@@ -2,6 +2,9 @@ Rails.application.routes.draw do
   resources :companies
 
   resources :exercises do
+    resources :entries, :only => [:new, :create]
+
+
     collection do
       get 'opened'
       get 'closed'
@@ -33,6 +36,6 @@ Rails.application.routes.draw do
 
   end
 
-  resources :entries
+  resources :entries, :except => [:new, :create]
 end
 

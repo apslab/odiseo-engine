@@ -5,7 +5,7 @@
   = breadcrumbs do |breadcrumb|
     - breadcrumb.item current_company.name.titlecase, root_path
     - breadcrumb.item 'Asientos', entries_path
-    - breadcrumb.item 'Nuevo', new_entry_path, :active => true
+    - breadcrumb.item 'Nuevo', new_exercise_entry_path(@entry.exercise), :active => true
 
 - content_for(:controls) do
   = controls do |control|
