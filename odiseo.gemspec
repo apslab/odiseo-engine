@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{odiseo}
-  s.version = "0.7.5"
+  s.version = "0.7.6"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = [%q{AP System}]
-  s.date = %q{2011-07-06}
+  s.authors = ["AP System"]
+  s.date = %q{2011-07-14}
   s.description = %q{Adminsitracion de contabilidad}
   s.email = %q{info@ap-sys.com.ar}
   s.extra_rdoc_files = [
@@ -87,9 +87,9 @@ Gem::Specification.new do |s|
     "spec/views/odiseo/reports/show.html.haml_spec.rb"
   ]
   s.homepage = %q{http://github.com/lguardiola/odiseo}
-  s.licenses = [%q{MIT}]
-  s.require_paths = [%q{lib}]
-  s.rubygems_version = %q{1.8.5}
+  s.licenses = ["MIT"]
+  s.require_paths = ["lib"]
+  s.rubygems_version = %q{1.5.0}
   s.summary = %q{Proyecto Contable}
 
   if s.respond_to? :specification_version then
