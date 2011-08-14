@@ -3,8 +3,8 @@
     = f.semantic_errors
     = f.input :entry_id, :as => :hidden
     = f.input :description, :label => false, :wrapper_html => {:style => 'width:42%'}
-    =# f.input :account, :collection => current_company.accounts.leaves.map{|a|[[a.code, a.name].compact.join(' &raquo; ').html_safe, a.id]}, :prompt => '-- seleccione una cuenta --', :label => false, :wrapper_html => {:style => 'width:41%'}, :input_html => {:class => :select_for_accounts}
-    = f.input :account, :collection => options_from_entry_for_select(@entry), :prompt => '-- seleccione una cuenta --', :label => false, :wrapper_html => {:style => 'width:41%'}, :input_html => {:class => :select_for_accounts}
+    = f.input :account, :collection => @entry.exercise.accounts.leaves.map{|a|[[a.code, a.name].compact.join(' &raquo; ').html_safe, a.id]}, :prompt => '-- seleccione una cuenta --', :label => false, :wrapper_html => {:style => 'width:41%'}, :input_html => {:class => :select_for_accounts}
+    =# f.input :account, :collection => options_from_entry_for_select(@entry), :prompt => '-- seleccione una cuenta --', :label => false, :wrapper_html => {:style => 'width:41%'}, :input_html => {:class => :select_for_accounts}
     = f.input :debit, :label => false, :wrapper_html => {:style => 'width:5%;'}, :input_html => {:class => :debit}
     = f.input :credit, :label => false, :wrapper_html => {:style => 'width:5%;'}, :input_html => {:class => :credit}
     = link_to_remove_association icon('cross', :small, :title => 'eliminar detalle'), f

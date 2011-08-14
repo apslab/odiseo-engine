@@ -35,14 +35,17 @@ class EntriesController < AuthorizedController
   # GET /entries/new.json
   # GET /entries/new.xml
   def new
-    @entry = Entry.setup
-    @entry.exercise = Exercise.find(params[:exercise_id])
+    @entry = Entry.new   #Entry.setup
+    @entry.exercise_id = params[:exercise_id]
+    @entry.exercise = Exercise.find(@entry.exercise_id)
     
-    logger.debug @entry.exercise
+    @entry.date_on = Date.today.between?(@entry.exercise.started_on,@entry.exercise.finished_on) ? Date.today : @entry.exercise.period[1]
+     
+    2.times{@entry.details.build}
     
-    #current_user.current_company.exercises do |exercise|
-    #  @entry.exercise_id = exercise.id if @entry.date_on.between?(exercise.started_on,exercise.finished_on)
-    #end
+    #logger.debug @entry.exercise
+    flash[:notice] = @entry.exercise.description + ' desde ' + @entry.exercise.started_on.to_s + ' hasta ' + @entry.exercise.finished_on.to_s
+    
     respond_with(@entry)
   end
 
@@ -58,8 +61,13 @@ class EntriesController < AuthorizedController
   # POST /entries.xml
   def create
     @entry = Entry.new(params[:entry])
+    @entry.exercise = Exercise.find(params[:exercise_id])
+    
+    #logger.info 'estoy aca'
+    
     flash[:notice] = t('flash.actions.create.notice', :resource_name => Entry.model_name.human) if @entry.save
     #respond_with(@entry, :location => entries_path)
+
     respond_with(@entry) # show
   end
 

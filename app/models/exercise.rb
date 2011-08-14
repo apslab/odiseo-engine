@@ -35,6 +35,8 @@ class Exercise < ActiveRecord::Base
   validates_with Apslabs::Validators::Exercise, :started_on => :started_on, :finished_on => :finished_on, :uneven => :uneven
   validates_with Apslabs::Validators::StartBeforeOf, :field_name => :started_on, :before_of => :finished_on
 
+  #scope :by_company, lambda {|company| where(:company_id => company.id) }
+
   default_scope order('started_on DESC')
   scope :opened, where(:close => false)
   scope :closed, where(:close => true)
@@ -52,7 +54,7 @@ class Exercise < ActiveRecord::Base
   end
 
   def self.from_date_or_default(date=nil)
-    self.from_date(date || Date.today) || first
+    self.from_date(date || Date.today) #|| first
   end
 
   def period

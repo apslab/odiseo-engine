@@ -15,11 +15,12 @@
 #
 
 class Entry < ActiveRecord::Base
-  paginates_per 30
+  paginates_per 10
 
   default_scope order('exercise_id DESC, date_on DESC')
 
   belongs_to :exercise, :counter_cache => true
+  #has_one :company, :through => :exercise
 
   has_many :details do
     def balance
@@ -44,28 +45,25 @@ class Entry < ActiveRecord::Base
   validates_presence_of :exercise, :date_on, :description
   validate :check_balance, :check_many_entries, :date_between_exercise_date
 
-  before_validation :link_exercise_from_date_on#, :if => :date_on_changed?
+  before_validation :link_exercise_from_date_on, :if => :date_on_changed?
 
   before_destroy :destroy_forbiden
 
   def self.setup
     new do |entry|
       entry.date_on = Date.today
-      #entry.exercise_id = 1 #current_user.current_company.exercises.from(entry.date_on).id
       2.times{entry.details.build}
     end
   end
 
   protected
 
-  def _exercise_id
-    target = _read_attribute(:exercise_id)
-    target ||= Exercise.from_date_or_default(read_attribute(:date_on)).try(:id)
-
-    errors.add(:base, 'Debe crear al menos un ejercicio para poder consumir el sitema.') if target.nil?
-
-    return target
-  end
+  #def _exercise_id
+  #  target = _read_attribute(:exercise_id)
+  #  target ||= Exercise.from_date_or_default(_read_attribute(:date_on)).try(:id)
+  #  errors.add(:base, 'Debe crear al menos un ejercicio para poder consumir el sistema.') if target.nil?
+  #  return target
+  #end
 
   def link_exercise_from_date_on
     # FIXME: on migration don't work

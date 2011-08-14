@@ -15,7 +15,6 @@
       - control.item t('scaffold.actions.new', :item => Entry.model_name.human).titlecase, new_exercise_entry_path(@exercise), :icon => 'add'  
 
 .block
-  %h2 Asientos
   - if @entries.any?
     .clear
     .block{:style => 'margin:20px;'}= paginate(@entries)
