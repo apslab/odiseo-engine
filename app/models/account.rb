@@ -45,7 +45,7 @@ class Account < ActiveRecord::Base
   validates_uniqueness_of :name, :scope => [:exercise_id, :parent_id], :on => :update
   validates_uniqueness_of :code, :scope => [:exercise_id, :parent_id], :on => :update
 
-  before_destroy :account_in_use?
+  before_destroy :account_in_use? && :account_isnt_leaf?
 
 =begin
   def self.from(user)
@@ -63,6 +63,10 @@ class Account < ActiveRecord::Base
 
   def account_in_use?
     raise Apslabs::Exceptions::HasDetails if details.any?
+  end
+
+  def account_isnt_leaf?
+    raise unless self.leaf?
   end
 
 end

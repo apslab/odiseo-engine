@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   resources :companies
 
   resources :exercises do
-    resources :entries, :only => [:new, :create]
+    resources :entries #, :only => [:new, :create, :edit]
 
 
     collection do

@@ -6,7 +6,7 @@
     - breadcrumb.item current_company.name.titlecase, root_path(current_company)
     - breadcrumb.item 'Asientos', entries_path
     - breadcrumb.item @entry.description, entry_path(@entry)
-    - breadcrumb.item 'Editar', edit_entry_path(@entry), :active => true
+    - breadcrumb.item 'Editar', edit_entry_path(@entry.exercise,@entry), :active => true
 
 - content_for(:controls) do
   = controls do |control|
