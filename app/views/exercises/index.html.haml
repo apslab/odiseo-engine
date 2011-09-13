@@ -30,7 +30,7 @@
         %td= exercise.description
         %td= exercise.uneven? ? icon('tick') : icon('cross')
         %td= exercise.close? ? icon('tick') : icon('cross')
-        %td.last
+        %td.last.actions
           = link_to icon('application_get', :small, :title => t('scaffold.actions.show').titlecase), exercise
           = link_to icon('application_edit', :small, :title => t('scaffold.actions.edit').titlecase), edit_exercise_path(exercise)
           = link_to icon('application_delete', :small, :title => t('scaffold.actions.destroy').titlecase), exercise, :confirm => t('scaffold.actions.destroy_confirm'), :method => :delete
