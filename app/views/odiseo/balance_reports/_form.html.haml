@@ -2,10 +2,10 @@
   = f.semantic_errors
 
   = f.inputs(:class => :column_left) do
-    = f.input :since_date, :as => :datepicker    
+    = f.input :since_date, :as => :date    
     = f.input :exercise_id, :as => :select, :collection => current_company.exercises.map{|e|[e.label, e.id]}    
   = f.inputs(:class => :column_right) do
-    = f.input :until_date, :as => :datepicker
+    = f.input :until_date, :as => :date
   .clear
   = f.inputs do
     = link_to_function(icon('report_magnify') + 'Mostrar Reporte', "$(this).closest('form').submit();", :class => :button)

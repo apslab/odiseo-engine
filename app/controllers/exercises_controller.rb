@@ -83,6 +83,9 @@ class ExercisesController < AuthorizedController
   # POST /exercises.xml
   def create
     @exercise = Exercise.new(params[:exercise].update(:company_id => current_company.id))
+    #TODO agregar cuentas a un ejercicio nuevo. Seleccionar las cuentas del último ejercicio
+    #@exercise.accounts = 
+    
     flash[:notice] = t('flash.actions.create.notice', :resource_name => Exercise.model_name.human) if @exercise.save
     respond_with(@exercise, :location => exercises_path)
   end

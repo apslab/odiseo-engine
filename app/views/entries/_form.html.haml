@@ -75,7 +75,7 @@
     = form.inputs(:class => :column_left) do
       = form.input :exercise, :collection => current_company.exercises.map{|e|[e.label, e.id]}, :prompt => false
   = form.inputs do
-    = form.input :date_on, :as => :datepicker
+    = form.input :date_on, :as => :date
     = form.input :description, :input_html => {:style => 'float:left;'}
 
   .clear

@@ -2,8 +2,8 @@
   = f.semantic_errors
 
   = f.inputs do
-    = f.input :started_on, :as => :datepicker
-    = f.input :finished_on, :as => :datepicker
+    = f.input :started_on, :as => :date
+    = f.input :finished_on, :as => :date
     = f.input :description
     = f.input :uneven
     = f.input :close unless @exercise.new_record?
